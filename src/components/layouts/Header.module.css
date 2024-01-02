@@ -1,0 +1,21 @@
+.header {
+  @apply 
+  flex 
+  justify-between 
+  items-center 
+
+  w-full
+  h-16 
+  py-3
+  px-10
+
+  fixed top-0
+  
+  border-b-2 border-b-gray-100 
+
+  bg-white dark:bg-black
+}
+
+.logo{
+  @apply text-xl text-blue-500 font-[700]
+}

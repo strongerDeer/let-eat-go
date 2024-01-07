@@ -9,12 +9,12 @@ export default function StoreListPage({ stores }: { stores: StoreType[] }) {
           {stores.map((store, index) => (
             <li key={index}>
               <Image
-                src={`/images/markers/${store.bizcnd_code_nm || 'default'}.png`}
+                src={`/images/markers/${store.category || 'default'}.png`}
                 width={48}
                 height={48}
                 alt=""
               />
-              {store.upso_nm}
+              {store.name}
             </li>
           ))}
         </ul>

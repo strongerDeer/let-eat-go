@@ -15,18 +15,18 @@ export default function StoreBox({ store, setStore }: StoreBoxProps) {
         <>
           <Image
             src={`/images/markers/${
-              store.bizcnd_code_nm ? store.bizcnd_code_nm : 'default'
+              store.category ? store.category : 'default'
             }.png`}
             width={100}
             height={100}
             alt=""
           />
-          {store.upso_nm}
-          {store.tel_no}
+          {store.name}
+          {store.phone}
 
-          {store.cob_code_nm}
-          {store.rdn_addr_code}
-          {store.crtfc_gbn_nm}
+          {store.storeType}
+          {store.address}
+          {store.foodCertifyName}
 
           <Link href="">상세보기</Link>
           <button type="button" onClick={() => setStore(null)}>

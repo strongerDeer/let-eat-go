@@ -1,8 +1,9 @@
+import { StoreType } from '@/interface';
 import { Dispatch, SetStateAction, useCallback, useEffect } from 'react';
 
 interface MarkersProps {
   map: any;
-  stores: any[];
+  stores: StoreType[];
   setCurrentStore: Dispatch<SetStateAction<any>>;
 }
 export default function Markers({
@@ -17,10 +18,10 @@ export default function Markers({
       // https://apis.map.kakao.com/web/sample/basicMarker/
       // https://apis.map.kakao.com/web/sample/basicMarkerImage/
       stores?.map((store) => {
-        const { y_dnts, x_cnts, bizcnd_code_nm, upso_nm } = store;
-        const markerPosition = new kakao.maps.LatLng(y_dnts, x_cnts);
+        const { lat, lan, category, name } = store;
+        const markerPosition = new kakao.maps.LatLng(lat, lan);
 
-        const imageSrc = `/images/markers/${bizcnd_code_nm || 'default'}.png`; // 마커이미지의 주소입니다
+        const imageSrc = `/images/markers/${category || 'default'}.png`; // 마커이미지의 주소입니다
         const imageSize = new kakao.maps.Size(40, 40); // 마커이미지의 크기입니다
         const imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
 
@@ -42,7 +43,7 @@ export default function Markers({
 
         // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
         // marker.setMap(null);
-        const iwContent = `<div class"infowindow">${upso_nm}</div>`;
+        const iwContent = `<div class"infowindow">${name}</div>`;
 
         // 인포윈도우를 생성합니다
         var infowindow = new kakao.maps.InfoWindow({

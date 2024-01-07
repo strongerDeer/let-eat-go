@@ -1,13 +1,16 @@
 import Image from 'next/image';
 import { Dispatch, SetStateAction } from 'react';
+import Link from 'next/link';
+import styles from './StoreBox.module.css';
 import { FiX } from 'react-icons/fi';
 
+import { StoreType } from '@/interface';
+
 interface StoreBoxProps {
-  store: any;
+  store: StoreType | null;
   setStore: Dispatch<SetStateAction<any>>;
 }
-import styles from './StoreBox.module.css';
-import Link from 'next/link';
+
 export default function StoreBox({ store, setStore }: StoreBoxProps) {
   return (
     <div className={styles.storeBox}>

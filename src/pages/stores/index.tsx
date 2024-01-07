@@ -1,8 +1,26 @@
+import Loading from '@/components/commmos/Loading';
 import { StoreType } from '@/interface';
 import axios from 'axios';
 import Image from 'next/image';
+import { useQuery } from 'react-query';
 
-export default function StoreListPage({ stores }: { stores: StoreType[] }) {
+export default function StoreListPage() {
+  const {
+    isLoading,
+    isError,
+    data: stores,
+  } = useQuery('stores', async () => {
+    const { data } = await axios('/api/stores');
+    return data as StoreType[];
+  });
+
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (isError) {
+    return <p>다시 시도해주세요</p>;
+  }
+
   return (
     <div>
       {stores && (
@@ -22,12 +40,4 @@ export default function StoreListPage({ stores }: { stores: StoreType[] }) {
       )}
     </div>
   );
-}
-
-export async function getServerSideProps() {
-  const stores = await axios(`${process.env.NEXT_PUBLIC_API_URL}/api/stores`);
-
-  return {
-    props: { stores: stores.data },
-  };
 }

@@ -1,17 +1,23 @@
 import Loading from '@/components/commmos/Loading';
-import { StoreType } from '@/interface';
+import Pagenation from '@/components/commmos/Pagenation';
+import { StoreAPIResponse } from '@/interface';
 import axios from 'axios';
 import Image from 'next/image';
+
+import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 
 export default function StoreListPage() {
+  const router = useRouter();
+  const { page = '1' }: { page?: any } = router.query;
+
   const {
     isLoading,
     isError,
     data: stores,
-  } = useQuery('stores', async () => {
-    const { data } = await axios('/api/stores');
-    return data as StoreType[];
+  } = useQuery(`stores-${page}`, async () => {
+    const { data } = await axios(`/api/stores?page=${page}`);
+    return data as StoreAPIResponse;
   });
 
   if (isLoading) {
@@ -25,7 +31,7 @@ export default function StoreListPage() {
     <div>
       {stores && (
         <ul>
-          {stores.map((store, index) => (
+          {stores?.data.map((store, index) => (
             <li key={index}>
               <Image
                 src={`/images/markers/${store.category || 'default'}.png`}
@@ -37,6 +43,9 @@ export default function StoreListPage() {
             </li>
           ))}
         </ul>
+      )}
+      {stores?.totalPage && (
+        <Pagenation totalPage={stores?.totalPage} page={page} />
       )}
     </div>
   );

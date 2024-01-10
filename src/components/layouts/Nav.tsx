@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { useSession, signOut } from 'next-auth/react';
 
 function MobileNav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,6 +29,7 @@ interface NavListProps {
   className?: string;
 }
 const NavList = ({ className }: NavListProps) => {
+  const { data, status } = useSession();
   return (
     <nav>
       <ul className={className}>
@@ -43,15 +45,25 @@ const NavList = ({ className }: NavListProps) => {
         <li>
           <Link href="/stores/1/edit">맛집 수정 페이지</Link>
         </li>
-        <li>
-          <Link href="/users/login">로그인 페이지</Link>
-        </li>
+
         <li>
           <Link href="/users/mypage">마이 페이지</Link>
         </li>
         <li>
           <Link href="/users/likes">찜한 맛집 페이지</Link>
         </li>
+
+        {status === 'authenticated' ? (
+          <li>
+            <button type="button" onClick={() => signOut()}>
+              로그아웃
+            </button>
+          </li>
+        ) : (
+          <li>
+            <Link href="/api/auth/signin">로그인</Link>
+          </li>
+        )}
       </ul>
     </nav>
   );

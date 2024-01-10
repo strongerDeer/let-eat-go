@@ -1,4 +1,5 @@
 import type { AppProps } from 'next/app';
+import { SessionProvider } from 'next-auth/react';
 
 import '@/styles/globals.css';
 
@@ -9,12 +10,15 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
+  const { session } = pageProps;
   return (
     <QueryClientProvider client={queryClient}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-      <ReactQueryDevtools />
+      <SessionProvider session={session}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+        <ReactQueryDevtools />
+      </SessionProvider>
     </QueryClientProvider>
   );
 }

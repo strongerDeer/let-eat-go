@@ -10,7 +10,7 @@ const prisma = new PrismaClient();
 //       storeType: store?.cob_code_nm, //업종 명 (식육즉석판매가공업, 식육판매업...)
 //       category: store?.bizcnd_code_nm, //업태 명(마커용)
 //       name: store?.upso_nm, // 업소 명
-//       lan: store?.x_cnts, // 지도 Y좌표
+//       lng: store?.x_cnts, // 지도 Y좌표
 //       lat: store?.y_dnts, // 지도 X좌표
 //       address: store?.rdn_code_nm, // 도로명주소
 //       foodCertifyName: store?.crtfc_gbn_nm, // 식품인증

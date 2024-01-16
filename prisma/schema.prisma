@@ -26,7 +26,7 @@ model Store{
   storeType String? // cob_code_nm 업종 명 (식육즉석판매가공업, 식육판매업...)
   category  String? // bizcnd_code_nm 업태 명(마커용)
   name      String? // upso_nm 업소 명
-  lan       String? // x_cnts 지도 Y좌표
+  lng       String? // x_cnts 지도 Y좌표
   lat       String? // y_dnts 지도 X좌표
   address   String? // rdn_code_nm 도로명주소
   foodCertifyName String? // crtfc_gbn_nm 식품인증 구분명(우리동네 모범정육점, 채식가능음식점...)

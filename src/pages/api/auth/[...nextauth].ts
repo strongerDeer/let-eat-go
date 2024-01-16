@@ -9,6 +9,11 @@ import KakaoProvider from 'next-auth/providers/kakao';
 const prisma = new PrismaClient();
 
 export const authOptions = {
+  session: {
+    stratege: 'jwt' as const,
+    maxAge: 60 * 60 * 24, //24시간(초단위)
+    updateAge: 60 * 60 * 2,
+  },
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({

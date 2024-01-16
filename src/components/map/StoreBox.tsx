@@ -31,7 +31,7 @@ export default function StoreBox({ store, setStore }: StoreBoxProps) {
           {store.address}
           {store.foodCertifyName}
 
-          <Link href="">상세보기</Link>
+          <Link href={`/stores/${store.id}`}>상세보기</Link>
           <button type="button" onClick={() => setStore(null)}>
             <FiX />
             <span className="a11y-hidden">닫기</span>

@@ -18,8 +18,8 @@ export default function Markers({
       // https://apis.map.kakao.com/web/sample/basicMarker/
       // https://apis.map.kakao.com/web/sample/basicMarkerImage/
       stores?.map((store) => {
-        const { lat, lan, category, name } = store;
-        const markerPosition = new kakao.maps.LatLng(lat, lan);
+        const { lat, lng, category, name } = store;
+        const markerPosition = new kakao.maps.LatLng(lat, lng);
 
         const imageSrc = `/images/markers/${category || 'default'}.png`; // 마커이미지의 주소입니다
         const imageSize = new kakao.maps.Size(40, 40); // 마커이미지의 크기입니다

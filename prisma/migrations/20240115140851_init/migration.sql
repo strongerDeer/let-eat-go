@@ -1,6 +1,28 @@
--- AlterTable
-ALTER TABLE "User" ADD COLUMN     "emailVerified" TIMESTAMP(3),
-ADD COLUMN     "image" TEXT;
+-- CreateTable
+CREATE TABLE "User" (
+    "id" SERIAL NOT NULL,
+    "email" TEXT NOT NULL,
+    "name" TEXT,
+    "emailVerified" TIMESTAMP(3),
+    "image" TEXT,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Store" (
+    "id" SERIAL NOT NULL,
+    "phone" TEXT,
+    "storeType" TEXT,
+    "category" TEXT,
+    "name" TEXT,
+    "lng" TEXT,
+    "lat" TEXT,
+    "address" TEXT,
+    "foodCertifyName" TEXT,
+
+    CONSTRAINT "Store_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "Account" (
@@ -10,6 +32,7 @@ CREATE TABLE "Account" (
     "provider" TEXT NOT NULL,
     "providerAccountId" TEXT NOT NULL,
     "refresh_token" TEXT,
+    "refresh_token_expires_in" INTEGER,
     "access_token" TEXT,
     "expires_at" INTEGER,
     "token_type" TEXT,
@@ -36,6 +59,9 @@ CREATE TABLE "VerificationToken" (
     "token" TEXT NOT NULL,
     "expires" TIMESTAMP(3) NOT NULL
 );
+
+-- CreateIndex
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Account_provider_providerAccountId_key" ON "Account"("provider", "providerAccountId");

@@ -1,23 +1,20 @@
 import { DISTRICT_ARR } from '@/data/store';
-import { Dispatch, SetStateAction } from 'react';
 
-interface SearchFilterProps {
-  setQ: Dispatch<SetStateAction<string | null>>;
-  setDistrict: Dispatch<SetStateAction<string | null>>;
-}
-export default function SearchFilter({
-  q,
-  setQ,
-  setDistrict,
-}: SearchFilterProps) {
+import { useRecoilState } from 'recoil';
+import { searchState } from '@/atom';
+
+export default function SearchFilter() {
+  const [search, setSearch] = useRecoilState(searchState);
+
   return (
     <div>
       <input
-        onChange={(e) => setQ(e.target.value)}
+        onChange={(e) => setSearch({ ...search, q: e.target.value })}
         type="search"
         placeholder="음식점 검색"
       />
-      <select onChange={(e) => setDistrict(e.target.value)}>
+      <select
+        onChange={(e) => setSearch({ ...search, district: e.target.value })}>
         <option value="">지역선택</option>
         {DISTRICT_ARR.map((data) => (
           <option value={data} key={data}>

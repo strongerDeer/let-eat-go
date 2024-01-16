@@ -1,17 +1,15 @@
 import Image from 'next/image';
-import { Dispatch, SetStateAction } from 'react';
 import Link from 'next/link';
 import styles from './StoreBox.module.css';
 import { FiX } from 'react-icons/fi';
 
 import { StoreType } from '@/interface';
+import { useRecoilState } from 'recoil';
+import { currentStoreState } from '@/atom';
 
-interface StoreBoxProps {
-  store: StoreType | null;
-  setStore: Dispatch<SetStateAction<any>>;
-}
+export default function StoreBox() {
+  const [store, setStore] = useRecoilState(currentStoreState);
 
-export default function StoreBox({ store, setStore }: StoreBoxProps) {
   return (
     <div className={styles.storeBox}>
       {store && (

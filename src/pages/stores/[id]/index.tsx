@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Loader from '@/components/commmos/Loader';
 import Map from '@/components/map/Map';
 import { StoreType } from '@/interface';
@@ -8,7 +7,6 @@ import { useQuery } from 'react-query';
 import Marker from '@/components/map/Marker';
 
 export default function StoreDetailPage() {
-  const [map, setMap] = useState();
   const router = useRouter();
   const { id } = router.query;
 
@@ -86,8 +84,8 @@ export default function StoreDetailPage() {
 
         {isSuccess && (
           <div className="w-full mx-auto h-[500px] overflow-hidden ">
-            <Map setMap={setMap} lat={store?.lat} lng={store?.lng} zoom={10} />
-            <Marker map={map} store={store} />
+            <Map lat={store?.lat} lng={store?.lng} zoom={10} />
+            <Marker store={store} />
           </div>
         )}
       </div>

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 
 import Image from 'next/image';
 import { StoreType } from '@/interface';
@@ -11,17 +11,20 @@ import Loading from '@/components/commmos/Loading';
 import useIntersectionObserver from '@/hooks/useIntersectionObserver';
 import Loader from '@/components/commmos/Loader';
 import SearchFilter from '@/components/commmos/SearchFilter';
+import Link from 'next/link';
+import { useRecoilValue } from 'recoil';
+import { searchState } from '@/atom';
 
 export default function StoreListPage() {
   const ref = useRef<HTMLDivElement | null>(null);
   const pageRef = useIntersectionObserver(ref, {});
   const isPageEnd = !!pageRef?.isIntersecting;
-  const [q, setQ] = useState<string | null>(null);
-  const [district, setDistrict] = useState<string | null>(null);
+
+  const searchValue = useRecoilValue(searchState);
 
   const searchParams = {
-    q: q,
-    district: district,
+    q: searchValue?.q,
+    district: searchValue?.district,
   };
 
   const fetchStores = async ({ pageParam = 1 }) => {
@@ -75,7 +78,7 @@ export default function StoreListPage() {
   return (
     <div>
       {/* 검색필터 */}
-      <SearchFilter setQ={setQ} setDistrict={setDistrict} />
+      <SearchFilter />
       {stores && (
         <>
           <ul>
@@ -87,15 +90,17 @@ export default function StoreListPage() {
                   <React.Fragment key={index}>
                     {page.data.map((store: StoreType, i: number) => (
                       <li key={i}>
-                        <Image
-                          src={`/images/markers/${
-                            store.category || 'default'
-                          }.png`}
-                          width={48}
-                          height={48}
-                          alt=""
-                        />
-                        {store.name}
+                        <Link href={`/stores/${store.id}`}>
+                          <Image
+                            src={`/images/markers/${
+                              store.category || 'default'
+                            }.png`}
+                            width={48}
+                            height={48}
+                            alt=""
+                          />
+                          {store.name}
+                        </Link>
                       </li>
                     ))}
                   </React.Fragment>

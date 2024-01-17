@@ -1,5 +1,7 @@
 export { default } from 'next-auth/middleware';
 
 export const config = {
-  matcher: ['/user/mypage', '/stores/new', '/stores/:id/edit', '/users/likes'],
+  matcher: [],
 };
+
+// '/users/mypage', '/stores/new', '/stores/:id/edit', '/users/likes'

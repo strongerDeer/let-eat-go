@@ -5,10 +5,14 @@ import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useQuery } from 'react-query';
 import Marker from '@/components/map/Marker';
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 export default function StoreDetailPage() {
   const router = useRouter();
   const { id } = router.query;
+  const { status } = useSession();
 
   const fetchStore = async () => {
     const { data } = await axios(`/api/stores?id=${id}`);
@@ -23,6 +27,25 @@ export default function StoreDetailPage() {
     enabled: !!id,
     refetchOnWindowFocus: false,
   });
+
+  const handleDelete = async () => {
+    const confirm = window.confirm('해당 가게를 삭제하시겠습니까?');
+
+    if (confirm && store) {
+      try {
+        const result = await axios.delete(`/api/stores?id=${store.id}`);
+        if (result.status === 200) {
+          toast.success('삭제되었습니다');
+          router.replace('/');
+        } else {
+          toast.error('다시 시도해 주세요');
+        }
+      } catch (error) {
+        console.log(error);
+        toast.error('다시 시도해 주세요');
+      }
+    }
+  };
 
   if (isError) {
     return <p>다시 시도해 주세요!</p>;
@@ -87,6 +110,15 @@ export default function StoreDetailPage() {
             <Map lat={store?.lat} lng={store?.lng} zoom={10} />
             <Marker store={store} />
           </div>
+        )}
+
+        {status === 'authenticated' && (
+          <>
+            <Link href={`/stores/${store?.id}/edit`}>수정</Link>
+            <button type="button" onClick={handleDelete}>
+              삭제
+            </button>
+          </>
         )}
       </div>
     </>

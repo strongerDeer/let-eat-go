@@ -1,3 +1,4 @@
+import CurrentLocationButton from '@/components/commmos/CurrentLocationButton';
 import Map from '@/components/map/Map';
 import Markers from '@/components/map/Markers';
 
@@ -12,6 +13,7 @@ export default function Home({ stores }: { stores: StoreType[] }) {
         <Map />
         <Markers stores={stores} />
         <StoreBox />
+        <CurrentLocationButton />
       </div>
     </>
   );

@@ -8,7 +8,7 @@ import KakaoProvider from 'next-auth/providers/kakao';
 
 export const authOptions = {
   session: {
-    stratege: 'jwt' as const,
+    strategy: 'jwt' as const,
     maxAge: 60 * 60 * 24, //24시간(초단위)
     updateAge: 60 * 60 * 2,
   },
@@ -16,7 +16,7 @@ export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
-      clientSecret: process.env.GOGLE_CLIENT_SECRET || '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
     }),
     NaverProvider({
       clientId: process.env.NAVER_CLIENT_ID || '',

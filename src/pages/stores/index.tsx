@@ -14,6 +14,7 @@ import SearchFilter from '@/components/commmos/SearchFilter';
 import Link from 'next/link';
 import { useRecoilValue } from 'recoil';
 import { searchState } from '@/atom';
+import StoreListBox from '@/components/commmos/StoreListBox';
 
 export default function StoreListPage() {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -89,19 +90,7 @@ export default function StoreListPage() {
                 {stores?.pages?.map((page, index) => (
                   <React.Fragment key={index}>
                     {page.data.map((store: StoreType, i: number) => (
-                      <li key={i}>
-                        <Link href={`/stores/${store.id}`}>
-                          <Image
-                            src={`/images/markers/${
-                              store.category || 'default'
-                            }.png`}
-                            width={48}
-                            height={48}
-                            alt=""
-                          />
-                          {store.name}
-                        </Link>
-                      </li>
+                      <StoreListBox key={i} store={store} />
                     ))}
                   </React.Fragment>
                 ))}

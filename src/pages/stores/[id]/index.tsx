@@ -8,6 +8,7 @@ import Marker from '@/components/map/Marker';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
+import Like from '@/components/commmos/Like';
 
 export default function StoreDetailPage() {
   const router = useRouter();
@@ -61,6 +62,8 @@ export default function StoreDetailPage() {
           <h3 className="text-base font-semibold leading-7 text-gray-900">
             {store?.name}
           </h3>
+          {status === 'authenticated' && store && <Like storeId={store?.id} />}
+
           <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-500">
             {store?.category}
           </p>

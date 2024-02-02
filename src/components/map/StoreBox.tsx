@@ -6,6 +6,7 @@ import { FiX } from 'react-icons/fi';
 import { StoreType } from '@/interface';
 import { useRecoilState } from 'recoil';
 import { currentStoreState } from '@/atom';
+import Like from '../commmos/Like';
 
 export default function StoreBox() {
   const [store, setStore] = useRecoilState(currentStoreState);
@@ -14,6 +15,8 @@ export default function StoreBox() {
     <div className={styles.storeBox}>
       {store && (
         <>
+          <Like storeId={store.id} />
+
           <Image
             src={`/images/markers/${
               store.category ? store.category : 'default'

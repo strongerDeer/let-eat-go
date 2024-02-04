@@ -1,5 +1,5 @@
 import Loading from '@/components/commmos/Loading';
-import Pagenation from '@/components/commmos/Pagenation';
+import Pagination from '@/components/commmos/Pagination';
 import StoreListBox from '@/components/commmos/StoreListBox';
 import StoreBox from '@/components/map/StoreBox';
 import { LikeAPIResponse, LikeInterface, StoreType } from '@/interface';
@@ -46,7 +46,7 @@ export default function LikesPage() {
             )}
           </ul>
           {likes?.totalPage && likes?.totalPage > 0 && (
-            <Pagenation
+            <Pagination
               totalPage={likes?.totalPage}
               page={page}
               pathname="likes"

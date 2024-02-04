@@ -9,14 +9,40 @@ export interface StoreType {
   address?: string | null;
   foodCertifyName?: string | null;
   likes?: LikeInterface[];
+  comments?: CommentInterface[];
 }
+
+export interface UserType {
+  id: number;
+  email: string;
+  name?: string | null;
+  image?: string | null;
+}
+
+// comment
+export interface CommentInterface {
+  id: number;
+  storeId: number;
+  userId: number;
+  store?: StoreType;
+  body: string;
+  user?: UserType;
+  createdAt: Date;
+}
+export interface CommentAPIResponse {
+  data: CommentInterface[];
+  totalPage?: number;
+  totalCount?: number;
+  page?: number;
+}
+
+// like
 export interface LikeInterface {
   id: number;
   storeId: number;
   userId: number;
   store?: StoreType;
 }
-
 export interface LikeAPIResponse {
   data: LikeInterface[];
   totalPage?: number;

@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 export default function Like({ storeId }: { storeId: number }) {
   const { data: session, status } = useSession();
 
-  console.log(status);
   const fetchStore = async () => {
     const { data } = await axios(`/api/stores?id=${storeId}`);
     return data as StoreType;

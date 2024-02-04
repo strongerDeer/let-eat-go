@@ -9,6 +9,7 @@ import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { toast } from 'react-toastify';
 import Like from '@/components/commmos/Like';
+import Comments from '@/components/comments';
 
 export default function StoreDetailPage() {
   const router = useRouter();
@@ -108,10 +109,13 @@ export default function StoreDetailPage() {
         </div>
 
         {isSuccess && (
-          <div className="w-full mx-auto h-[500px] overflow-hidden ">
-            <Map lat={store?.lat} lng={store?.lng} zoom={10} />
-            <Marker store={store} />
-          </div>
+          <>
+            <div className="w-full mx-auto h-[500px] overflow-hidden ">
+              <Map lat={store?.lat} lng={store?.lng} zoom={10} />
+              <Marker store={store} />
+            </div>
+            <Comments storeId={store.id} />
+          </>
         )}
 
         {status === 'authenticated' && (

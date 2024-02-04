@@ -5,8 +5,9 @@ import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 
 export default function Like({ storeId }: { storeId: number }) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
+  console.log(status);
   const fetchStore = async () => {
     const { data } = await axios(`/api/stores?id=${storeId}`);
     return data as StoreType;
@@ -35,12 +36,16 @@ export default function Like({ storeId }: { storeId: number }) {
       } catch (error) {
         console.log(error);
       }
+    } else if (status === 'unauthenticated') {
+      toast.warning('로그인 후 이용해주세요!');
     }
   };
 
   return (
     <button type="button" onClick={toggleLike}>
-      {store?.likes?.length ? '좋아(누름)' : '좋아안함(안누름)'}
+      {status === 'unauthenticated' && store?.likes?.length
+        ? '좋아(누름)'
+        : '좋아안함(안누름)'}
     </button>
   );
 }

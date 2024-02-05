@@ -1,3 +1,5 @@
+'use client';
+
 import { UseFormRegister, FieldErrors, UseFormSetValue } from 'react-hook-form';
 import { StoreType } from '@/interface';
 import DaumPostcodeEmbed from 'react-daum-postcode';

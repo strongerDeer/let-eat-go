@@ -1,3 +1,5 @@
+'use client';
+
 import { DISTRICT_ARR } from '@/data/store';
 
 import { useRecoilState } from 'recoil';

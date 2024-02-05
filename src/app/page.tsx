@@ -4,9 +4,10 @@ import Markers from '@/components/map/Markers';
 
 import StoreBox from '@/components/map/StoreBox';
 import { StoreType } from '@/interface';
-import axios from 'axios';
 
-export default function Home({ stores }: { stores: StoreType[] }) {
+export default async function Page() {
+  const stores: StoreType[] = await getData();
+
   return (
     <>
       <div className="h-screen">
@@ -18,12 +19,18 @@ export default function Home({ stores }: { stores: StoreType[] }) {
     </>
   );
 }
-export async function getStaticProps() {
-  // export async function getSeverSideProps() {
-  const stores = await axios(`${process.env.NEXT_PUBLIC_API_URL}/api/stores`);
+async function getData() {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/stores`, {
+      cache: 'no-store',
+    });
 
-  return {
-    props: { stores: stores.data },
-    revalidate: 60 * 60,
-  };
+    if (!res.ok) {
+      throw new Error('Failed to fetch data');
+    }
+
+    return res.json();
+  } catch (e) {
+    console.log(e);
+  }
 }

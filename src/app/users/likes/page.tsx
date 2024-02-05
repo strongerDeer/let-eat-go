@@ -1,16 +1,16 @@
+'use client';
+
 import Loading from '@/components/commmos/Loading';
 import Pagination from '@/components/commmos/Pagination';
 import StoreListBox from '@/components/commmos/StoreListBox';
-import StoreBox from '@/components/map/StoreBox';
-import { LikeAPIResponse, LikeInterface, StoreType } from '@/interface';
+
+import { LikeAPIResponse, LikeInterface } from '@/interface';
 import axios from 'axios';
-import { useRouter } from 'next/router';
 import React from 'react';
 import { useQuery } from 'react-query';
 
-export default function LikesPage() {
-  const router = useRouter();
-  const { page = '1' }: any = router.query;
+export default function LikesPage({ params }: { params?: { page?: string } }) {
+  const page = params?.page || '1';
 
   const fetchLikes = async () => {
     const { data } = await axios(`/api/likes?limit=10&page=${page}`);
@@ -20,6 +20,7 @@ export default function LikesPage() {
   const {
     data: likes,
     isError,
+    isSuccess,
     isLoading,
   } = useQuery(`likes-${page}`, fetchLikes);
 
@@ -43,6 +44,11 @@ export default function LikesPage() {
                   </React.Fragment>
                 ))}
               </>
+            )}
+            {isSuccess && !!!likes.data.length && (
+              <p>
+                찜한 가게가 없습니다<div className=""></div>
+              </p>
             )}
           </ul>
           {likes?.totalPage && likes?.totalPage > 0 && (

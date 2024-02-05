@@ -1,8 +1,10 @@
+'use client';
+
 import Loader from '@/components/commmos/Loader';
 import Map from '@/components/map/Map';
 import { StoreType } from '@/interface';
 import axios from 'axios';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useQuery } from 'react-query';
 import Marker from '@/components/map/Marker';
 import { useSession } from 'next-auth/react';
@@ -11,9 +13,13 @@ import { toast } from 'react-toastify';
 import Like from '@/components/commmos/Like';
 import Comments from '@/components/comments';
 
-export default function StoreDetailPage() {
+export default function StoreDetailPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const router = useRouter();
-  const { id } = router.query;
+  const id = params.id;
   const { status } = useSession();
 
   const fetchStore = async () => {

@@ -33,6 +33,7 @@ export default function Like({ storeId }: { storeId: number }) {
         } else {
           toast.warn('찜을 취소했습니다.');
         }
+
         refetch();
       } catch (error) {
         console.log(error);
@@ -44,7 +45,7 @@ export default function Like({ storeId }: { storeId: number }) {
 
   return (
     <button type="button" onClick={toggleLike}>
-      {status === 'unauthenticated' && store?.likes?.length
+      {status === 'authenticated' && store?.likes?.length
         ? '좋아(누름)'
         : '좋아안함(안누름)'}
     </button>

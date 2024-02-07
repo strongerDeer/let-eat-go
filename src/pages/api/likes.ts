@@ -7,7 +7,7 @@ interface ResponseType {
   limit?: string;
 }
 import { getServerSession } from 'next-auth';
-import { authOptions } from './auth/[...nextauth]';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 export default async function handler(
   req: NextApiRequest,

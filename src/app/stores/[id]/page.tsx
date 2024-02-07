@@ -13,11 +13,12 @@ import { toast } from 'react-toastify';
 import Like from '@/components/commmos/Like';
 import Comments from '@/components/comments';
 
-export default function StoreDetailPage({
-  params,
-}: {
+interface ParamsProps {
   params: { id: string };
-}) {
+  searchParams: { page: string };
+}
+
+export default function StoreDetailPage({ params, searchParams }: ParamsProps) {
   const router = useRouter();
   const id = params.id;
   const { status } = useSession();
@@ -31,7 +32,7 @@ export default function StoreDetailPage({
     isFetching,
     isSuccess,
     isError,
-  } = useQuery(`store-${id}`, fetchStore, {
+  } = useQuery<StoreType>(`store-${id}`, fetchStore, {
     enabled: !!id,
     refetchOnWindowFocus: false,
   });
@@ -41,7 +42,7 @@ export default function StoreDetailPage({
 
     if (confirm && store) {
       try {
-        const result = await axios.delete(`/api/stores?id=${store.id}`);
+        const result = await axios.delete(`/api/stores?id=${store?.id}`);
         if (result.status === 200) {
           toast.success('삭제되었습니다');
           router.replace('/');
@@ -56,7 +57,11 @@ export default function StoreDetailPage({
   };
 
   if (isError) {
-    return <p>다시 시도해 주세요!</p>;
+    return (
+      <div className="w-full h-screen mx-auto pt-[10%] text-red-500 text-center font-semibold">
+        다시 시도해주세요
+      </div>
+    );
   }
   if (isFetching) {
     return <Loader />;
@@ -120,7 +125,7 @@ export default function StoreDetailPage({
               <Map lat={store?.lat} lng={store?.lng} zoom={10} />
               <Marker store={store} />
             </div>
-            <Comments storeId={store.id} />
+            <Comments storeId={store.id} page={searchParams.page} />{' '}
           </>
         )}
 

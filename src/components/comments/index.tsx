@@ -1,5 +1,3 @@
-'use client';
-
 import { useSession } from 'next-auth/react';
 
 import CommentForm from './CommentForm';
@@ -11,12 +9,11 @@ import Pagination from '../commmos/Pagination';
 
 interface CommentProps {
   storeId: number;
-  params?: { page?: string };
+  page: string;
 }
 
-export default function Comments({ storeId, params }: CommentProps) {
+export default function Comments({ storeId, page = '1' }: CommentProps) {
   const { status } = useSession();
-  const page = params?.page || '1';
 
   const fetchComments = async () => {
     const { data } = await axios(

@@ -10,9 +10,13 @@ import { StoreType } from '@/interface';
 import { useQuery } from 'react-query';
 import Loader from '@/components/commmos/Loader';
 
-export default function StoreEditPage({ params }: { params: { id: string } }) {
+export default function StoreEditPage({
+  searchParams,
+}: {
+  searchParams: { id: string };
+}) {
   const router = useRouter();
-  const id = params.id;
+  const id = searchParams.id;
 
   const fetchStore = async () => {
     const { data } = await axios(`/api/stores?id=${id}`);

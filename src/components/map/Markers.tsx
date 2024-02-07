@@ -2,11 +2,11 @@
 
 import { currentStoreState, locationState, mapState } from '@/atom';
 import { StoreType } from '@/interface';
-import { useCallback, useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 interface MarkersProps {
-  stores: StoreType[];
+  stores?: StoreType[];
 }
 export default function Markers({ stores }: MarkersProps) {
   const map = useRecoilValue(mapState);
@@ -21,8 +21,6 @@ export default function Markers({ stores }: MarkersProps) {
       // https://apis.map.kakao.com/web/sample/basicMarkerImage/
       stores?.map((store) => {
         const { lat, lng, category, name } = store;
-        const markerPosition = new kakao.maps.LatLng(lat, lng);
-
         const imageSrc = `/images/markers/${category || 'default'}.png`; // 마커이미지의 주소입니다
         const imageSize = new kakao.maps.Size(40, 40); // 마커이미지의 크기입니다
         const imageOption = { offset: new kakao.maps.Point(27, 69) }; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
@@ -33,7 +31,8 @@ export default function Markers({ stores }: MarkersProps) {
           imageSize,
           imageOption,
         );
-
+        // 마커가 표시될 위치입니다
+        const markerPosition = new kakao.maps.LatLng(lat, lng);
         // 마커를 생성합니다
         const marker = new kakao.maps.Marker({
           position: markerPosition,
@@ -45,10 +44,10 @@ export default function Markers({ stores }: MarkersProps) {
 
         // 아래 코드는 지도 위의 마커를 제거하는 코드입니다
         // marker.setMap(null);
-        const iwContent = `<div class"infowindow">${name}</div>`;
+        const iwContent = `<div class="infowindow">${name}</div>`;
 
         // 인포윈도우를 생성합니다
-        var infowindow = new kakao.maps.InfoWindow({
+        const infowindow = new kakao.maps.InfoWindow({
           position: markerPosition,
           content: iwContent,
           xAnchor: 0.6,
@@ -78,7 +77,7 @@ export default function Markers({ stores }: MarkersProps) {
         });
       });
     }
-  }, [map, stores]);
+  }, [map, stores, location, setCurrentStore, setLocation]);
 
   useEffect(() => {
     loadKakaoMarkers();

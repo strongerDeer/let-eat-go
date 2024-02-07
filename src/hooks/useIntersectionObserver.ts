@@ -1,5 +1,3 @@
-'use client';
-
 import { RefObject, useState, useEffect } from 'react';
 
 function useIntersectionObserver(
@@ -24,7 +22,7 @@ function useIntersectionObserver(
     observer.observe(node);
 
     return () => observer.disconnect();
-  }, [elementRef?.current, root, rootMargin, JSON.stringify(threshold)]);
+  }, [elementRef, root, rootMargin, threshold]);
   return entry;
 }
 
